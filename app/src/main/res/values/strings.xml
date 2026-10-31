@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">OfflinePay</string>
+    <string name="scan_qr_title">Scan UPI QR</string>
+    <string name="scan_qr_subtitle">Hold viewfinder over any merchant or personal UPI QR code</string>
+    <string name="scan_from_gallery">Scan from Gallery</string>
+    <string name="pay_to_contact">Pay to Contact</string>
+    <string name="torch_on">Turn Torch On</string>
+    <string name="torch_off">Turn Torch Off</string>
+    <string name="align_qr_hint">Align QR code inside the frame</string>
+
+    <!-- Camera Permission -->
+    <string name="camera_permission_required">Camera Permission Required</string>
+    <string name="camera_permission_rationale">OfflinePay needs camera access strictly to scan UPI QR codes offline. Images are never transmitted or saved.</string>
+    <string name="grant_permission">Grant Permission</string>
+
+    <!-- Error Messages -->
+    <string name="invalid_qr_title">Invalid QR Code</string>
+    <string name="gallery_no_qr_found">No QR code found in selected image.</string>
+    <string name="error_ok">OK</string>
+</resources>
