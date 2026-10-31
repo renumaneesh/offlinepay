@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Notes
 import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Phone
@@ -290,6 +291,27 @@ private fun TransactionItemCard(
                         text = formattedDate,
                         fontSize = 11.sp,
                         color = TextMuted
+                    )
+                }
+            }
+
+            if (!transaction.note.isNullOrBlank()) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.Notes,
+                        contentDescription = null,
+                        tint = TextMuted,
+                        modifier = Modifier.size(13.dp)
+                    )
+                    Text(
+                        text = transaction.note,
+                        fontSize = 12.sp,
+                        color = TextSecondary,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
             }

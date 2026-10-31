@@ -35,6 +35,7 @@
     <string name="amount_invalid_format">अधिकतम 2 दशमलव अंक अनुमत हैं</string>
     <string name="note_label">विवरण / नोट</string>
     <string name="no_note_provided">कोई नोट नहीं दिया गया</string>
+    <string name="enter_note_hint">कोई विवरण या नोट जोड़ें (उदा. भोजन, किराया)</string>
     <string name="currency_inr">₹</string>
 
     <!-- Trusted Payee -->

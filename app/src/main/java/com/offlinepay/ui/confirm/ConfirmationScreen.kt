@@ -87,6 +87,9 @@ fun ConfirmationScreen(
     var enteredAmountText by remember {
         mutableStateOf(initialAmount?.toPlainString() ?: "")
     }
+    var enteredNoteText by remember {
+        mutableStateOf(target.note ?: "")
+    }
     var isTrustedPayee by remember { mutableStateOf(false) }
 
     // Real-time amount validation
@@ -354,31 +357,68 @@ fun ConfirmationScreen(
             color = DarkSurface,
             border = androidx.compose.foundation.BorderStroke(1.dp, DarkSurfaceBorder)
         ) {
-            Row(
-                modifier = Modifier.padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            Column(
+                modifier = Modifier.padding(18.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.Notes,
-                    contentDescription = null,
-                    tint = TextMuted,
-                    modifier = Modifier.size(22.dp)
-                )
-                Column {
-                    Text(
-                        text = stringResource(id = R.string.note_label),
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = TextMuted
-                    )
-                    Text(
-                        text = note ?: stringResource(id = R.string.no_note_provided),
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Normal,
-                        color = if (note != null) TextPrimary else TextMuted
-                    )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.Notes,
+                            contentDescription = null,
+                            tint = AccentCyan,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Text(
+                            text = stringResource(id = R.string.note_label),
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = TextSecondary
+                        )
+                    }
+
+                    if (enteredNoteText.isNotEmpty()) {
+                        Text(
+                            text = "${enteredNoteText.length}/50",
+                            fontSize = 11.sp,
+                            color = TextMuted
+                        )
+                    }
                 }
+
+                OutlinedTextField(
+                    value = enteredNoteText,
+                    onValueChange = {
+                        if (it.length <= 50) {
+                            enteredNoteText = it
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    placeholder = {
+                        Text(
+                            text = stringResource(id = R.string.enter_note_hint),
+                            color = TextMuted,
+                            fontSize = 14.sp
+                        )
+                    },
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = TextPrimary,
+                        unfocusedTextColor = TextPrimary,
+                        focusedBorderColor = AccentCyan,
+                        unfocusedBorderColor = DarkSurfaceBorder,
+                        focusedContainerColor = DarkSurfaceElevated,
+                        unfocusedContainerColor = DarkSurfaceElevated
+                    ),
+                    shape = RoundedCornerShape(14.dp)
+                )
             }
         }
 
@@ -461,9 +501,10 @@ fun ConfirmationScreen(
                 onClick = {
                     if (amountValidationResult is AmountValidation.Valid) {
                         val validAmount = (amountValidationResult as AmountValidation.Valid).amount
+                        val finalNote = enteredNoteText.trim().ifEmpty { null }
                         val resolvedTarget = when (target) {
-                            is PaymentTarget.UpiId -> target.copy(amount = validAmount)
-                            is PaymentTarget.MobileNumber -> target.copy(amount = validAmount)
+                            is PaymentTarget.UpiId -> target.copy(amount = validAmount, note = finalNote)
+                            is PaymentTarget.MobileNumber -> target.copy(amount = validAmount, note = finalNote)
                         }
                         onProceedToPay(resolvedTarget, isTrustedPayee)
                     }

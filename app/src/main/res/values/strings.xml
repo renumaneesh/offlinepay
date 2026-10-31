@@ -34,6 +34,7 @@
     <string name="amount_invalid_format">Maximum 2 decimal places allowed</string>
     <string name="note_label">Note</string>
     <string name="no_note_provided">No note specified</string>
+    <string name="enter_note_hint">Add a note (e.g. Dinner, Rent)</string>
     <string name="currency_inr">₹</string>
 
     <!-- Trusted Payee -->

@@ -19,6 +19,7 @@ data class TransactionEntity(
     val payeeName: String?,
     val originalIdentifier: String,
     val amount: Double,
+    val note: String? = null,
     val timestamp: Long,
     val riskScore: Float,
     val riskLevel: RiskLevel,

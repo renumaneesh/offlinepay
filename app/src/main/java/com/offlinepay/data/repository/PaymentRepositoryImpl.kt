@@ -41,6 +41,7 @@ class PaymentRepositoryImpl(
             payeeName = norm.displayName,
             originalIdentifier = norm.originalIdentifier,
             amount = amount,
+            note = target.note,
             timestamp = timestamp,
             riskScore = riskScore,
             riskLevel = riskLevel,

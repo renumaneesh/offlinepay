@@ -9,12 +9,13 @@ import java.math.BigDecimal
  */
 sealed class PaymentTarget {
     abstract val amount: BigDecimal?
+    abstract val note: String?
 
     data class UpiId(
         val vpa: String,
         val name: String?,
         override val amount: BigDecimal?,
-        val note: String?
+        override val note: String? = null
     ) : PaymentTarget() {
         /**
          * Returns the handle portion of the VPA before the '@'.
@@ -32,6 +33,7 @@ sealed class PaymentTarget {
     data class MobileNumber(
         val number: String,
         val contactName: String?,
-        override val amount: BigDecimal?
+        override val amount: BigDecimal?,
+        override val note: String? = null
     ) : PaymentTarget()
 }

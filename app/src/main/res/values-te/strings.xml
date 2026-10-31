@@ -35,6 +35,7 @@
     <string name="amount_invalid_format">గరిష్టంగా 2 దశాంశ స్థానాలు మాత్రమే అనుమతించబడతాయి</string>
     <string name="note_label">వివరణ / నోట్</string>
     <string name="no_note_provided">ఎలాంటి నోట్ ఇవ్వలేదు</string>
+    <string name="enter_note_hint">వివరణ లేదా గమనిక జోడించండి (ఉదా. డిన్నర్, అద్దె)</string>
     <string name="currency_inr">₹</string>
 
     <!-- Trusted Payee -->
