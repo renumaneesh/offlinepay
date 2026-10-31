@@ -1,9 +1,12 @@
 package com.offlinepay.ui.scan
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.provider.ContactsContract
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -15,8 +18,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,12 +39,9 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -68,6 +70,7 @@ import com.offlinepay.ui.theme.DarkSurfaceBorder
 import com.offlinepay.ui.theme.PrimaryBlue
 import com.offlinepay.ui.theme.TextPrimary
 import com.offlinepay.ui.theme.TextSecondary
+import com.offlinepay.util.ContactNormalizer
 import com.offlinepay.util.UpiParser
 
 @Composable
@@ -75,7 +78,6 @@ fun ScanScreen(
     onPaymentTargetResolved: (PaymentTarget) -> Unit,
     onNavigateToHistory: () -> Unit = {},
     onNavigateToSettings: () -> Unit = {},
-    onPayToContactClicked: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -97,21 +99,20 @@ fun ScanScreen(
 
     var isTorchEnabled by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
-    var isProcessingGalleryImage by remember { mutableStateOf(false) }
+    var errorTitle by remember { mutableStateOf<String?>(null) }
 
     // Gallery Picker launcher
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         if (uri != null) {
-            isProcessingGalleryImage = true
             decodeQrFromGalleryUri(context, uri) { result ->
-                isProcessingGalleryImage = false
                 result.fold(
                     onSuccess = { target ->
                         onPaymentTargetResolved(target)
                     },
                     onFailure = { err ->
+                        errorTitle = context.getString(R.string.invalid_qr_title)
                         errorMessage = err.localizedMessage ?: context.getString(R.string.gallery_no_qr_found)
                     }
                 )
@@ -119,7 +120,54 @@ fun ScanScreen(
         }
     }
 
-    // Function to handle detected barcode from camera or gallery
+    // Phase 2b: Contact Picker launcher (Zero READ_CONTACTS permission needed)
+    val contactPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val contactUri = result.data?.data
+            if (contactUri != null) {
+                val projection = arrayOf(
+                    ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                    ContactsContract.CommonDataKinds.Phone.NUMBER
+                )
+                try {
+                    context.contentResolver.query(contactUri, projection, null, null, null)?.use { cursor ->
+                        if (cursor.moveToFirst()) {
+                            val nameIdx = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
+                            val numberIdx = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+                            val name = if (nameIdx != -1) cursor.getString(nameIdx) else null
+                            val rawNumber = if (numberIdx != -1) cursor.getString(numberIdx) else null
+
+                            val normResult = ContactNormalizer.normalize(rawNumber)
+                            normResult.fold(
+                                onSuccess = { cleanNumber ->
+                                    onPaymentTargetResolved(
+                                        PaymentTarget.MobileNumber(
+                                            number = cleanNumber,
+                                            contactName = name,
+                                            amount = null
+                                        )
+                                    )
+                                },
+                                onFailure = { err ->
+                                    errorTitle = context.getString(R.string.invalid_contact_title)
+                                    errorMessage = err.localizedMessage
+                                }
+                            )
+                        } else {
+                            errorTitle = context.getString(R.string.invalid_contact_title)
+                            errorMessage = context.getString(R.string.contact_picker_failed)
+                        }
+                    }
+                } catch (e: Exception) {
+                    errorTitle = context.getString(R.string.invalid_contact_title)
+                    errorMessage = e.localizedMessage ?: context.getString(R.string.contact_picker_failed)
+                }
+            }
+        }
+    }
+
     val handleScannedBarcode = { rawValue: String ->
         val parseResult = UpiParser.parse(rawValue)
         parseResult.fold(
@@ -127,12 +175,17 @@ fun ScanScreen(
                 onPaymentTargetResolved(payload.toPaymentTarget())
             },
             onFailure = { error ->
+                errorTitle = context.getString(R.string.invalid_qr_title)
                 errorMessage = error.localizedMessage ?: "Invalid UPI QR Code."
             }
         )
     }
 
-    Box(modifier = modifier.fillMaxSize().background(DarkBackground)) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(DarkBackground)
+    ) {
         if (hasCameraPermission) {
             CameraPreview(
                 isTorchEnabled = isTorchEnabled,
@@ -141,7 +194,6 @@ fun ScanScreen(
             )
             ViewfinderOverlay(modifier = Modifier.fillMaxSize())
         } else {
-            // High-contrast permission rationale UI
             CameraPermissionRationale(
                 onRequestPermission = {
                     permissionLauncher.launch(Manifest.permission.CAMERA)
@@ -150,11 +202,12 @@ fun ScanScreen(
             )
         }
 
-        // Top Navigation Header
+        // Top Navigation Header with statusBarsPadding
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 44.dp, start = 16.dp, end = 16.dp),
+                .statusBarsPadding()
+                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -222,12 +275,13 @@ fun ScanScreen(
             }
         }
 
-        // Bottom Action Controls
+        // Bottom Action Controls with navigationBarsPadding
         Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
-                .padding(bottom = 36.dp, start = 20.dp, end = 20.dp),
+                .navigationBarsPadding()
+                .padding(bottom = 24.dp, start = 20.dp, end = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
@@ -261,9 +315,15 @@ fun ScanScreen(
                     )
                 }
 
-                // Pay to Contact Button (Prepared for Phase 2b)
+                // Phase 2b: Pay to Contact Button
                 FilledTonalButton(
-                    onClick = onPayToContactClicked,
+                    onClick = {
+                        val pickIntent = Intent(
+                            Intent.ACTION_PICK,
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI
+                        )
+                        contactPickerLauncher.launch(pickIntent)
+                    },
                     modifier = Modifier
                         .weight(1f)
                         .height(56.dp),
@@ -292,10 +352,13 @@ fun ScanScreen(
         // Error Dialog
         if (errorMessage != null) {
             AlertDialog(
-                onDismissRequest = { errorMessage = null },
+                onDismissRequest = {
+                    errorMessage = null
+                    errorTitle = null
+                },
                 title = {
                     Text(
-                        text = stringResource(id = R.string.invalid_qr_title),
+                        text = errorTitle ?: stringResource(id = R.string.invalid_qr_title),
                         fontWeight = FontWeight.Bold,
                         color = TextPrimary
                     )
@@ -309,7 +372,10 @@ fun ScanScreen(
                 },
                 confirmButton = {
                     Button(
-                        onClick = { errorMessage = null },
+                        onClick = {
+                            errorMessage = null
+                            errorTitle = null
+                        },
                         colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue)
                     ) {
                         Text(text = stringResource(id = R.string.error_ok))
@@ -322,9 +388,6 @@ fun ScanScreen(
     }
 }
 
-/**
- * Decodes a QR code from a saved gallery image URI using ML Kit's offline InputImage.
- */
 private fun decodeQrFromGalleryUri(
     context: Context,
     imageUri: Uri,
@@ -380,7 +443,9 @@ private fun CameraPermissionRationale(
     modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = modifier.padding(24.dp),
+        modifier = modifier
+            .padding(24.dp)
+            .statusBarsPadding(),
         contentAlignment = Alignment.Center
     ) {
         Surface(

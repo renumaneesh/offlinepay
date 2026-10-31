@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Icon
@@ -26,10 +27,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.offlinepay.R
 import com.offlinepay.ui.theme.DarkSurface
+import com.offlinepay.ui.theme.DarkSurfaceElevated
 import com.offlinepay.ui.theme.RiskHigh
 import com.offlinepay.ui.theme.RiskHighContainer
 import com.offlinepay.ui.theme.RiskLow
@@ -79,15 +82,19 @@ fun RiskBanner(
         border = androidx.compose.foundation.BorderStroke(1.5.dp, statusColor.copy(alpha = 0.5f))
     ) {
         Column(
-            modifier = Modifier.padding(18.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            modifier = Modifier
+                .background(containerColor.copy(alpha = 0.25f))
+                .padding(18.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
+            // Header: Shield Icon + Title + Non-wrapping Pill Badge
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Row(
+                    modifier = Modifier.weight(1f, fill = false),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
@@ -95,7 +102,7 @@ fun RiskBanner(
                         modifier = Modifier
                             .size(36.dp)
                             .background(containerColor, CircleShape)
-                            .border(1.dp, statusColor, CircleShape),
+                            .border(1.5.dp, statusColor, CircleShape),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
@@ -106,39 +113,69 @@ fun RiskBanner(
                         )
                     }
 
-                    Text(
-                        text = stringResource(id = R.string.ai_safety_check_title),
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = TextPrimary
-                    )
+                    Column {
+                        Text(
+                            text = stringResource(id = R.string.ai_safety_check_title),
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = TextPrimary,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        Text(
+                            text = "Offline Fraud Shield",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = statusColor
+                        )
+                    }
                 }
 
-                // Risk Badge Chip
-                Box(
-                    modifier = Modifier
-                        .background(
-                            color = containerColor,
-                            shape = RoundedCornerShape(12.dp)
-                        )
-                        .border(1.dp, statusColor, RoundedCornerShape(12.dp))
-                        .padding(horizontal = 12.dp, vertical = 6.dp)
+                Spacer(modifier = Modifier.width(8.dp))
+
+                // Non-wrapping Horizontal Risk Badge Pill
+                Surface(
+                    shape = RoundedCornerShape(12.dp),
+                    color = containerColor,
+                    border = androidx.compose.foundation.BorderStroke(1.2.dp, statusColor)
                 ) {
                     Text(
                         text = stringResource(id = labelRes),
                         color = statusColor,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Bold,
-                        letterSpacing = 0.5.sp
+                        letterSpacing = 0.5.sp,
+                        maxLines = 1,
+                        softWrap = false,
+                        modifier = Modifier.padding(horizontal = 14.dp, vertical = 6.dp)
                     )
                 }
             }
 
+            // Divider / Subtle highlight bar
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .background(statusColor.copy(alpha = 0.2f))
+            )
+
+            // Explanatory Reason or Safe Status
             if (reasons.isNotEmpty()) {
-                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     for (reason in reasons) {
-                        Row(verticalAlignment = Alignment.Top) {
-                            Text(text = "• ", color = statusColor, fontSize = 14.sp)
+                        Row(
+                            verticalAlignment = Alignment.Top,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Icon(
+                                imageVector = if (riskLevel == DisplayRiskLevel.LOW) Icons.Default.CheckCircle else Icons.Default.Warning,
+                                contentDescription = null,
+                                tint = statusColor,
+                                modifier = Modifier
+                                    .size(16.dp)
+                                    .padding(top = 2.dp)
+                            )
                             Text(
                                 text = reason,
                                 color = TextSecondary,
@@ -149,12 +186,23 @@ fun RiskBanner(
                     }
                 }
             } else {
-                Text(
-                    text = stringResource(id = R.string.risk_banner_safe_desc),
-                    color = TextSecondary,
-                    fontSize = 13.sp,
-                    lineHeight = 18.sp
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.CheckCircle,
+                        contentDescription = null,
+                        tint = statusColor,
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Text(
+                        text = stringResource(id = R.string.risk_banner_safe_desc),
+                        color = TextSecondary,
+                        fontSize = 13.sp,
+                        lineHeight = 18.sp
+                    )
+                }
             }
         }
     }

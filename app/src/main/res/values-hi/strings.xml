@@ -17,6 +17,8 @@
     <!-- Error Messages -->
     <string name="invalid_qr_title">अमान्य QR कोड</string>
     <string name="gallery_no_qr_found">चुनी गई छवि में कोई QR कोड नहीं मिला।</string>
+    <string name="invalid_contact_title">अमान्य फ़ोन नंबर</string>
+    <string name="contact_picker_failed">डिवाइस से संपर्क विवरण पढ़ने में असमर्थ।</string>
     <string name="error_ok">ठीक है</string>
 
     <!-- Phase 2: Confirmation Screen -->
@@ -44,7 +46,7 @@
     <string name="risk_level_low">कम जोखिम</string>
     <string name="risk_level_medium">मध्यम जोखिम</string>
     <string name="risk_level_high">उच्च जोखिम चेतावनी</string>
-    <string name="risk_banner_safe_desc">प्राप्तकर्ता प्रारूप सत्यापित। कोई संदिग्ध गतिविधि नहीं मिली।</string>
+    <string name="risk_banner_safe_desc">प्राप्तकर्ता प्रारूप सत्यापित। सुरक्षित रूप से आगे बढ़ें।</string>
 
     <!-- Action Buttons -->
     <string name="proceed_to_pay">भुगतान के लिए आगे बढ़ें</string>

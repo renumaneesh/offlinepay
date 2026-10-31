@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -19,12 +21,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.automirrored.filled.Notes
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Notes
 import androidx.compose.material.icons.filled.Payment
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.QrCode
@@ -52,7 +51,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -136,11 +134,13 @@ fun ConfirmationScreen(
         modifier = modifier
             .fillMaxSize()
             .background(DarkBackground)
+            .statusBarsPadding()
+            .navigationBarsPadding()
             .padding(horizontal = 20.dp)
             .verticalScroll(scrollState),
-        verticalArrangement = Arrangement.spacedBy(18.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Spacer(modifier = Modifier.height(28.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         // Top App Bar
         Row(
@@ -175,7 +175,6 @@ fun ConfirmationScreen(
                 )
             }
 
-            // Balanced spacing spacer
             Spacer(modifier = Modifier.size(44.dp))
         }
 
@@ -193,7 +192,7 @@ fun ConfirmationScreen(
             ) {
                 Box(
                     modifier = Modifier
-                        .size(60.dp)
+                        .size(56.dp)
                         .background(AccentCyan.copy(alpha = 0.12f), CircleShape)
                         .border(1.5.dp, AccentCyan.copy(alpha = 0.4f), CircleShape),
                     contentAlignment = Alignment.Center
@@ -202,7 +201,7 @@ fun ConfirmationScreen(
                         imageVector = if (isUpiTarget) Icons.Default.QrCode else Icons.Default.Phone,
                         contentDescription = null,
                         tint = AccentCyan,
-                        modifier = Modifier.size(30.dp)
+                        modifier = Modifier.size(28.dp)
                     )
                 }
 
@@ -279,7 +278,6 @@ fun ConfirmationScreen(
                 }
 
                 if (isAmountLocked) {
-                    // Big Bold Display for QR-preset amounts
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
@@ -300,7 +298,6 @@ fun ConfirmationScreen(
                         )
                     }
                 } else {
-                    // Editable text input for missing amounts
                     OutlinedTextField(
                         value = enteredAmountText,
                         onValueChange = { enteredAmountText = it.trim() },
@@ -363,7 +360,7 @@ fun ConfirmationScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Icon(
-                    imageVector = Icons.Default.Notes,
+                    imageVector = Icons.AutoMirrored.Filled.Notes,
                     contentDescription = null,
                     tint = TextMuted,
                     modifier = Modifier.size(22.dp)
@@ -385,7 +382,7 @@ fun ConfirmationScreen(
             }
         }
 
-        // 4. On-Device AI Fraud Risk Banner (Phase 4 Hook)
+        // 4. On-Device AI Fraud Risk Banner (Redesigned & Responsive)
         RiskBanner(
             riskLevel = DisplayRiskLevel.LOW,
             reasons = emptyList()
@@ -453,7 +450,7 @@ fun ConfirmationScreen(
             }
         }
 
-        Spacer(modifier = Modifier.height(6.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         // 6. Large High-Contrast Action Buttons
         Column(
@@ -515,7 +512,7 @@ fun ConfirmationScreen(
             }
         }
 
-        Spacer(modifier = Modifier.height(28.dp))
+        Spacer(modifier = Modifier.height(24.dp))
     }
 }
 

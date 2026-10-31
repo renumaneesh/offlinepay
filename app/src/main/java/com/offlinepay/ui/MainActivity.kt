@@ -68,13 +68,6 @@ class MainActivity : ComponentActivity() {
                                         "Settings (Available in Phase 6)",
                                         Toast.LENGTH_SHORT
                                     ).show()
-                                },
-                                onPayToContactClicked = {
-                                    Toast.makeText(
-                                        this@MainActivity,
-                                        "Pay to Contact (Available in Phase 2b)",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
                                 }
                             )
                         } else {
@@ -83,7 +76,7 @@ class MainActivity : ComponentActivity() {
                                 onProceedToPay = { confirmedTarget, isTrusted ->
                                     val payee = when (confirmedTarget) {
                                         is PaymentTarget.UpiId -> confirmedTarget.vpa
-                                        is PaymentTarget.MobileNumber -> confirmedTarget.number
+                                        is PaymentTarget.MobileNumber -> "${confirmedTarget.contactName ?: "Contact"} (${confirmedTarget.number})"
                                     }
                                     val msg = "Proceeding with ₹${confirmedTarget.amount} to $payee (Trusted: $isTrusted)"
                                     Toast.makeText(this@MainActivity, msg, Toast.LENGTH_LONG).show()

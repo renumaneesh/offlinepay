@@ -16,6 +16,8 @@
     <!-- Error Messages -->
     <string name="invalid_qr_title">Invalid QR Code</string>
     <string name="gallery_no_qr_found">No QR code found in selected image.</string>
+    <string name="invalid_contact_title">Invalid Phone Number</string>
+    <string name="contact_picker_failed">Unable to read contact details from device.</string>
     <string name="error_ok">OK</string>
 
     <!-- Phase 2: Confirmation Screen -->
@@ -43,7 +45,7 @@
     <string name="risk_level_low">LOW RISK</string>
     <string name="risk_level_medium">MODERATE RISK</string>
     <string name="risk_level_high">HIGH RISK WARNING</string>
-    <string name="risk_banner_safe_desc">Payee format validated offline. No suspicious patterns detected.</string>
+    <string name="risk_banner_safe_desc">Payee format validated offline. Safe to proceed.</string>
 
     <!-- Action Buttons -->
     <string name="proceed_to_pay">Proceed to Pay</string>
