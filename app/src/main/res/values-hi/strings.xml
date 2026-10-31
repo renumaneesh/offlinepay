@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OfflinePay</string>
+    <string name="scan_qr_title">UPI QR स्कैन करें</string>
+    <string name="scan_qr_subtitle">किसी भी व्यापारी या व्यक्तिगत UPI QR कोड पर कैमरा रखें</string>
+    <string name="scan_from_gallery">गैलरी से स्कैन करें</string>
+    <string name="pay_to_contact">संपर्क को भुगतान करें</string>
+    <string name="torch_on">टॉर्च चालू करें</string>
+    <string name="torch_off">टॉर्च बंद करें</string>
+    <string name="align_qr_hint">QR कोड को फ्रेम के अंदर रखें</string>
+
+    <!-- Camera Permission -->
+    <string name="camera_permission_required">कैमरा अनुमति आवश्यक है</string>
+    <string name="camera_permission_rationale">OfflinePay को ऑफ़लाइन UPI QR कोड स्कैन करने के लिए कैमरे की आवश्यकता है। चित्र कभी भी भेजे या सहेजे नहीं जाते हैं।</string>
+    <string name="grant_permission">अनुमति दें</string>
+
+    <!-- Error Messages -->
+    <string name="invalid_qr_title">अमान्य QR कोड</string>
+    <string name="gallery_no_qr_found">चुनी गई छवि में कोई QR कोड नहीं मिला।</string>
+    <string name="error_ok">ठीक है</string>
+
+    <!-- Phase 2: Confirmation Screen -->
+    <string name="confirm_payment_title">भुगतान पुष्टि</string>
+    <string name="confirm_payment_subtitle">USSD भुगतान से पहले विवरण सत्यापित करें</string>
+    <string name="paying_to">भुगतान पाने वाला</string>
+    <string name="unknown_payee">अज्ञात प्राप्तकर्ता</string>
+    <string name="upi_id_label">UPI आईडी</string>
+    <string name="mobile_number_label">मोबाइल नंबर</string>
+    <string name="amount_label">राशि</string>
+    <string name="enter_amount_hint">₹ में राशि दर्ज करें</string>
+    <string name="amount_required">राशि आवश्यक है</string>
+    <string name="amount_positive">राशि ₹0 से अधिक होनी चाहिए</string>
+    <string name="amount_invalid_format">अधिकतम 2 दशमलव अंक अनुमत हैं</string>
+    <string name="note_label">विवरण / नोट</string>
+    <string name="no_note_provided">कोई नोट नहीं दिया गया</string>
+    <string name="currency_inr">₹</string>
+
+    <!-- Trusted Payee -->
+    <string name="trust_payee_title">प्राप्तकर्ता को विश्वसनीय चिह्नित करें</string>
+    <string name="trust_payee_desc">भविष्य के भुगतानों के लिए इसे सुरक्षित चिह्नित करें</string>
+
+    <!-- Risk Banner Placeholder (Phase 4 Hook) -->
+    <string name="ai_safety_check_title">ऑन-डिवाइस AI सुरक्षा जांच</string>
+    <string name="risk_level_low">कम जोखिम</string>
+    <string name="risk_level_medium">मध्यम जोखिम</string>
+    <string name="risk_level_high">उच्च जोखिम चेतावनी</string>
+    <string name="risk_banner_safe_desc">प्राप्तकर्ता प्रारूप सत्यापित। कोई संदिग्ध गतिविधि नहीं मिली।</string>
+
+    <!-- Action Buttons -->
+    <string name="proceed_to_pay">भुगतान के लिए आगे बढ़ें</string>
+    <string name="cancel_payment">रद्द करें</string>
+    <string name="payment_initiated_msg">भुगतान शुरू किया गया। डायलर से पूरा करें।</string>
+</resources>

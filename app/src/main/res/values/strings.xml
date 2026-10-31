@@ -17,4 +17,36 @@
     <string name="invalid_qr_title">Invalid QR Code</string>
     <string name="gallery_no_qr_found">No QR code found in selected image.</string>
     <string name="error_ok">OK</string>
+
+    <!-- Phase 2: Confirmation Screen -->
+    <string name="confirm_payment_title">Payment Confirmation</string>
+    <string name="confirm_payment_subtitle">Verify payee details before USSD payment</string>
+    <string name="paying_to">Paying To</string>
+    <string name="unknown_payee">Unknown Payee</string>
+    <string name="upi_id_label">UPI ID</string>
+    <string name="mobile_number_label">Mobile Number</string>
+    <string name="amount_label">Amount</string>
+    <string name="enter_amount_hint">Enter amount in ₹</string>
+    <string name="amount_required">Amount is required</string>
+    <string name="amount_positive">Amount must be greater than ₹0</string>
+    <string name="amount_invalid_format">Maximum 2 decimal places allowed</string>
+    <string name="note_label">Note</string>
+    <string name="no_note_provided">No note specified</string>
+    <string name="currency_inr">₹</string>
+
+    <!-- Trusted Payee -->
+    <string name="trust_payee_title">Mark Payee as Trusted</string>
+    <string name="trust_payee_desc">Marks this payee as safe for future transactions</string>
+
+    <!-- Risk Banner Placeholder (Phase 4 Hook) -->
+    <string name="ai_safety_check_title">On-Device AI Safety Check</string>
+    <string name="risk_level_low">LOW RISK</string>
+    <string name="risk_level_medium">MODERATE RISK</string>
+    <string name="risk_level_high">HIGH RISK WARNING</string>
+    <string name="risk_banner_safe_desc">Payee format validated offline. No suspicious patterns detected.</string>
+
+    <!-- Action Buttons -->
+    <string name="proceed_to_pay">Proceed to Pay</string>
+    <string name="cancel_payment">Cancel</string>
+    <string name="payment_initiated_msg">Payment initiated. Complete via dialer.</string>
 </resources>
