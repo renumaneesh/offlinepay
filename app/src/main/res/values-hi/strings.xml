@@ -52,4 +52,14 @@
     <string name="proceed_to_pay">भुगतान के लिए आगे बढ़ें</string>
     <string name="cancel_payment">रद्द करें</string>
     <string name="payment_initiated_msg">भुगतान शुरू किया गया। डायलर से पूरा करें।</string>
+
+    <!-- Phase 3: History Screen -->
+    <string name="history_title">भुगतान इतिहास</string>
+    <string name="history_subtitle">इस डिवाइस पर ऑफ़लाइन भुगतान रिकॉर्ड</string>
+    <string name="clear_history">इतिहास साफ़ करें</string>
+    <string name="clear_history_confirm_title">सारा इतिहास साफ़ करें?</string>
+    <string name="clear_history_confirm_desc">यह इस डिवाइस से सभी ऑफ़लाइन भुगतान लॉग को स्थायी रूप से हटा देगा।</string>
+    <string name="clear_history_confirm_btn">सब हटाएं</string>
+    <string name="empty_history_title">अभी तक कोई लेनदेन नहीं</string>
+    <string name="empty_history_desc">QR स्कैन या संपर्क चयन के माध्यम से किए गए भुगतान यहां सुरक्षित रहेंगे।</string>
 </resources>

@@ -51,4 +51,14 @@
     <string name="proceed_to_pay">Proceed to Pay</string>
     <string name="cancel_payment">Cancel</string>
     <string name="payment_initiated_msg">Payment initiated. Complete via dialer.</string>
+
+    <!-- Phase 3: History Screen -->
+    <string name="history_title">Payment History</string>
+    <string name="history_subtitle">Offline payment records on this device</string>
+    <string name="clear_history">Clear History</string>
+    <string name="clear_history_confirm_title">Clear All History?</string>
+    <string name="clear_history_confirm_desc">This will permanently delete all offline payment logs from this device.</string>
+    <string name="clear_history_confirm_btn">Clear All</string>
+    <string name="empty_history_title">No Transactions Yet</string>
+    <string name="empty_history_desc">Payments initiated via QR scan or contact picker will be logged here.</string>
 </resources>

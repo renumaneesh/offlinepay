@@ -52,4 +52,14 @@
     <string name="proceed_to_pay">చెల్లింపు చేయడానికి ముందుకు వెళ్లండి</string>
     <string name="cancel_payment">రద్దు చేయండి</string>
     <string name="payment_initiated_msg">చెల్లింపు ప్రారంభించబడింది. డయలర్ ద్వారా పూర్తి చేయండి.</string>
+
+    <!-- Phase 3: History Screen -->
+    <string name="history_title">చెల్లింపుల చరిత్ర</string>
+    <string name="history_subtitle">ఈ డివైస్‌లో ఆఫ్‌లైన్ చెల్లింపుల రికార్డులు</string>
+    <string name="clear_history">చరిత్రను తొలగించండి</string>
+    <string name="clear_history_confirm_title">మొత్తం చరిత్రను తొలగించాలా?</string>
+    <string name="clear_history_confirm_desc">ఇది ఈ పరికరం నుండి అన్ని ఆఫ్‌లైన్ చెల్లింపు రికార్డులను శాశ్వతంగా తొలగిస్తుంది.</string>
+    <string name="clear_history_confirm_btn">అన్నీ తొలగించండి</string>
+    <string name="empty_history_title">ఇంకా ఎలాంటి లావాదేవీలు లేవు</string>
+    <string name="empty_history_desc">QR స్కాన్ లేదా కాంటాక్ట్ ద్వారా ప్రారంభించిన చెల్లింపులు ఇక్కడ భద్రపరచబడతాయి.</string>
 </resources>
