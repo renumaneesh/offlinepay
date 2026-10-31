@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Contacts
 import androidx.compose.material.icons.filled.FlashOff
 import androidx.compose.material.icons.filled.FlashOn
@@ -39,6 +40,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -100,6 +102,7 @@ fun ScanScreen(
     var isTorchEnabled by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
     var errorTitle by remember { mutableStateOf<String?>(null) }
+    var showCheckBalanceDialog by remember { mutableStateOf(false) }
 
     // Gallery Picker launcher
     val galleryLauncher = rememberLauncherForActivityResult(
@@ -347,6 +350,41 @@ fun ScanScreen(
                     )
                 }
             }
+
+            // Check Bank Balance Button (*99*3#)
+            FilledTonalButton(
+                onClick = { showCheckBalanceDialog = true },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                shape = RoundedCornerShape(16.dp),
+                colors = ButtonDefaults.filledTonalButtonColors(
+                    containerColor = DarkSurface.copy(alpha = 0.95f),
+                    contentColor = TextPrimary
+                ),
+                border = androidx.compose.foundation.BorderStroke(1.dp, AccentCyan.copy(alpha = 0.4f))
+            ) {
+                Icon(
+                    imageVector = Icons.Default.AccountBalance,
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp),
+                    tint = AccentCyan
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+                Text(
+                    text = stringResource(id = R.string.check_balance_button),
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = TextPrimary
+                )
+                Spacer(modifier = Modifier.width(6.dp))
+                Text(
+                    text = "(*99*3#)",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = AccentCyan
+                )
+            }
         }
 
         // Error Dialog
@@ -379,6 +417,59 @@ fun ScanScreen(
                         colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue)
                     ) {
                         Text(text = stringResource(id = R.string.error_ok))
+                    }
+                },
+                containerColor = DarkSurface,
+                shape = RoundedCornerShape(20.dp)
+            )
+        }
+
+        // Check Bank Balance Dialog
+        if (showCheckBalanceDialog) {
+            AlertDialog(
+                onDismissRequest = { showCheckBalanceDialog = false },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.AccountBalance,
+                        contentDescription = null,
+                        tint = AccentCyan,
+                        modifier = Modifier.size(32.dp)
+                    )
+                },
+                title = {
+                    Text(
+                        text = stringResource(id = R.string.check_balance_title),
+                        fontWeight = FontWeight.Bold,
+                        color = TextPrimary,
+                        textAlign = TextAlign.Center
+                    )
+                },
+                text = {
+                    Text(
+                        text = stringResource(id = R.string.check_balance_desc),
+                        color = TextSecondary,
+                        fontSize = 14.sp,
+                        lineHeight = 20.sp
+                    )
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            showCheckBalanceDialog = false
+                            val dialIntent = Intent(
+                                Intent.ACTION_DIAL,
+                                Uri.parse("tel:" + Uri.encode("*99*3#"))
+                            )
+                            context.startActivity(dialIntent)
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = PrimaryBlue)
+                    ) {
+                        Text(text = stringResource(id = R.string.dial_ussd_button))
+                    }
+                },
+                dismissButton = {
+                    OutlinedButton(onClick = { showCheckBalanceDialog = false }) {
+                        Text(text = stringResource(id = R.string.cancel_payment), color = TextSecondary)
                     }
                 },
                 containerColor = DarkSurface,

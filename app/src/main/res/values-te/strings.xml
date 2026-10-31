@@ -63,4 +63,10 @@
     <string name="clear_history_confirm_btn">అన్నీ తొలగించండి</string>
     <string name="empty_history_title">ఇంకా ఎలాంటి లావాదేవీలు లేవు</string>
     <string name="empty_history_desc">QR స్కాన్ లేదా కాంటాక్ట్ ద్వారా ప్రారంభించిన చెల్లింపులు ఇక్కడ భద్రపరచబడతాయి.</string>
+
+    <!-- Check Bank Balance -->
+    <string name="check_balance_button">బ్యాలెన్స్ చూడండి</string>
+    <string name="check_balance_title">ఆఫ్‌లైన్ బ్యాంక్ బ్యాలెన్స్ తనిఖీ</string>
+    <string name="check_balance_desc">OfflinePay మీ ఫోన్ డయలర్‌ను *99*3# తో తెరుస్తుంది. ఆఫ్‌లైన్ USSD ద్వారా మీ ఖాతా బ్యాలెన్స్ తనిఖీ చేయడానికి కాల్ బటన్ నొక్కండి. మీ UPI పిన్ మీ ఫోన్ సిస్టమ్ స్క్రీన్‌లో సురక్షితంగా నమోదు చేస్తారు.</string>
+    <string name="dial_ussd_button">*99*3# డయల్ చేయండి</string>
 </resources>

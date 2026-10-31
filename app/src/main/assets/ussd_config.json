@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "ussd_root": "*99#",
+  "bank_label": "SLICE SMALL FINANCE BANK / NPCI USSD",
+  "menu_options": {
+    "send_money": "1",
+    "check_balance": "3",
+    "my_profile": "4",
+    "pending_requests": "5",
+    "transactions": "6",
+    "upi_pin": "7"
+  },
+  "send_money_options": {
+    "mobile_number": "1",
+    "upi_id": "3",
+    "saved_beneficiary": "4",
+    "ifsc_account": "5",
+    "back": "00"
+  },
+  "direct_mmi_templates": {
+    "check_balance": "*99*3#",
+    "send_money_mobile": "*99*1*1*{mobile}*{amount}*{remark}#"
+  },
+  "notes": "Verified from real device USSD prompt: Send Money is 1, Check Balance is 3, UPI ID sub-option is 3."
+}

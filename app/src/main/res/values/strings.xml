@@ -62,4 +62,10 @@
     <string name="clear_history_confirm_btn">Clear All</string>
     <string name="empty_history_title">No Transactions Yet</string>
     <string name="empty_history_desc">Payments initiated via QR scan or contact picker will be logged here.</string>
+
+    <!-- Check Bank Balance -->
+    <string name="check_balance_button">Check Balance</string>
+    <string name="check_balance_title">Check Bank Balance Offline</string>
+    <string name="check_balance_desc">OfflinePay will open your phone dialer with *99*3#. Press Call to request your account balance via offline USSD. You will enter your UPI PIN securely in your phone\'s system dialog.</string>
+    <string name="dial_ussd_button">Dial *99*3#</string>
 </resources>

@@ -63,4 +63,10 @@
     <string name="clear_history_confirm_btn">सब हटाएं</string>
     <string name="empty_history_title">अभी तक कोई लेनदेन नहीं</string>
     <string name="empty_history_desc">QR स्कैन या संपर्क चयन के माध्यम से किए गए भुगतान यहां सुरक्षित रहेंगे।</string>
+
+    <!-- Check Bank Balance -->
+    <string name="check_balance_button">बैलेंस चेक करें</string>
+    <string name="check_balance_title">ऑफ़लाइन बैंक बैलेंस चेक करें</string>
+    <string name="check_balance_desc">OfflinePay आपके फ़ोन डायलर को *99*3# के साथ खोलेगा। ऑफ़लाइन USSD के माध्यम से अपने खाते की शेष राशि देखने के लिए कॉल दबाएं। आप अपना UPI पिन सुरक्षित रूप से अपने फ़ोन के सिस्टम डायलॉग में दर्ज करेंगे।</string>
+    <string name="dial_ussd_button">*99*3# डायल करें</string>
 </resources>
